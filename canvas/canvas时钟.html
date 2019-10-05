@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    #mycanvas {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%)
+    }
+</style>
+
+<body>
+    <canvas id=mycanvas width="500" height="500">
+        您当前的浏览器版本过低，请更换浏览器后重试
+    </canvas>
+</body>
+<script>
+    var mycan = document.querySelector('#mycanvas')
+    var testcan = mycan.getContext('2d');
+
+    function colock() {
+
+        //绘制大圆型表盘
+        testcan.strokeStyle = '#000' //线段颜色
+        testcan.lineWidth = 2 //线宽
+        testcan.beginPath(); //开始路径
+        testcan.arc(250, 250, 200, 0, 360); //arc绘制圆形，(x,y,半径,开始角度,结束角度)
+        testcan.stroke(); //连线
+        testcan.closePath(); //结束路径
+
+
+
+
+        var time = new Date()
+        var h = time.getHours();
+        var m = time.getMinutes();
+        var s = time.getSeconds();
+        h > 12 ? h - 12 : h; //转换成12小时制
+        h += (m / 60)
+
+
+        //清空画布
+        testcan.clearRect(0, 0, 500, 500)
+
+
+        //设置背景
+
+        testcan.clip();
+        var img = new Image;
+        img.src = "./yys.jpg"
+        testcan.drawImage(img, 0, 0, 500, 600);
+
+
+        //绘制分针刻度
+        for (let i = 0; i < 60; i++) {
+            testcan.save(); //保存
+            testcan.translate(250, 250); //设置原点
+            testcan.rotate((Math.PI / 30) * i); // 设置旋转,Math.PI 代表180° 
+            testcan.beginPath();
+            testcan.moveTo(0, -195)
+            testcan.lineTo(0, -185)
+            testcan.strokeStyle = "orange"
+            testcan.lineWidth = 2;
+            testcan.stroke();
+            testcan.closePath();
+            testcan.restore(); //恢复
+        }
+
+        //绘制时针刻度
+        for (let i = 0; i < 12; i++) {
+            testcan.save(); //保存
+            testcan.translate(250, 250); //设置圆点
+            testcan.rotate((Math.PI / 6) * i); // 设置旋转,Math.PI 代表180° 
+            testcan.beginPath();
+            testcan.moveTo(0, -195)
+            testcan.lineTo(0, -175)
+            testcan.strokeStyle = "black"
+            testcan.lineWidth = 2;
+            testcan.stroke();
+            testcan.closePath();
+            testcan.restore(); //恢复
+        }
+
+
+        //时针
+        shizhen(5, 'red', -130, 6, h)
+        //分针
+        shizhen(3, 'red', -150, 30, m)
+        //秒针
+        shizhen(1, 'red', -170, 30, s)
+
+
+        function shizhen(width, color, To, angle, time) {
+            testcan.save();
+            testcan.lineWidth = width
+            testcan.strokeStyle = color
+            testcan.translate(250, 250);
+            testcan.rotate((Math.PI / angle) * time)
+            testcan.beginPath();
+            testcan.moveTo(0, To)
+            testcan.lineTo(0, 10)
+            testcan.stroke();
+            testcan.closePath();
+            testcan.restore();
+        }
+
+
+    }
+
+    setInterval(() => {
+        colock()
+    }, 1000)
+</script>
+
+</html>

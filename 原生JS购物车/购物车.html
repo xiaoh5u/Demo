@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>NOW</title>
+  </head>
+  <link rel="stylesheet" href="style.css" />
+
+  <body>
+    <div class="catbox">
+      <table id="cartTable">
+        <thead>
+          <tr>
+            <th>
+              <label>
+                <input
+                  class="check-all check"
+                  type="checkbox"
+                />&nbsp;&nbsp;全选</label
+              >
+            </th>
+            <th>商品</th>
+            <th>单价</th>
+            <th>数量</th>
+            <th>小计</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="checkbox">
+              <input class="check-one check" type="checkbox" />
+            </td>
+            <td class="goods">
+              <img src="source/1.jpg" alt="" /><span
+                >Casio/卡西欧 EX-TR350</span
+              >
+            </td>
+            <td class="price">5999.88</td>
+            <td class="count">
+              <span class="reduce"></span>
+              <input class="count-input" type="text" value="1" />
+              <span class="add">+</span>
+            </td>
+            <td class="subtotal">5999.88</td>
+            <td class="operation"><span class="delete">删除</span></td>
+          </tr>
+          <tr>
+            <td class="checkbox">
+              <input class="check-one check" type="checkbox" />
+            </td>
+            <td class="goods">
+              <img src="source/2.jpg" alt="" /><span
+                >Canon/佳能 PowerShot SX50 HS</span
+              >
+            </td>
+            <td class="price">3888.50</td>
+            <td class="count">
+              <span class="reduce"></span>
+              <input class="count-input" type="text" value="1" />
+              <span class="add">+</span>
+            </td>
+            <td class="subtotal">3888.50</td>
+            <td class="operation"><span class="delete">删除</span></td>
+          </tr>
+          <tr>
+            <td class="checkbox">
+              <input class="check-one check" type="checkbox" />
+            </td>
+            <td class="goods">
+              <img src="source/3.jpg" alt="" /><span>Sony/索尼 DSC-WX300</span>
+            </td>
+            <td class="price">1428.50</td>
+            <td class="count">
+              <span class="reduce"></span>
+              <input class="count-input" type="text" value="1" />
+              <span class="add">+</span>
+            </td>
+            <td class="subtotal">1428.50</td>
+            <td class="operation"><span class="delete">删除</span></td>
+          </tr>
+          <tr>
+            <td class="checkbox">
+              <input class="check-one check" type="checkbox" />
+            </td>
+            <td class="goods">
+              <img src="source/4.jpg" alt="" /><span
+                >Fujifilm/富士 instax mini 25</span
+              >
+            </td>
+            <td class="price">640.60</td>
+            <td class="count">
+              <span class="reduce"></span>
+              <input class="count-input" type="text" value="1" />
+              <span class="add">+</span>
+            </td>
+            <td class="subtotal">640.60</td>
+            <td class="operation"><span class="delete">删除</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="foot" id="foot">
+        <label class="fl select-all"
+          ><input
+            type="checkbox"
+            class="check-all check"
+          />&nbsp;&nbsp;全选</label
+        >
+        <a class="fl delete" id="deleteAll" href="javascript:;">删除</a>
+        <div class="fr closing" onclick="getTotal();">结 算</div>
+        <input type="hidden" id="cartTotalPrice" />
+        <div class="fr total">合计：￥<span id="priceTotal">0.00</span></div>
+        <div class="fr selected" id="selected">
+          已选商品<span id="selectedTotal">0</span>件<span class="arrow up"
+            >︽</span
+          ><span class="arrow down">︾</span>
+        </div>
+        <div class="selected-view">
+          <div id="selectedViewList" class="clearfix">
+            <div><img src="source/" /><span>取消选择</span></div>
+          </div>
+          <span class="arrow">◆<span>◆</span></span>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    var oAdd = document.querySelectorAll(".add");
+    var oReduce = document.querySelectorAll(".reduce");
+    var oDelete = document.querySelectorAll(".delete");
+    var oCheckAll = document.querySelector(".check-all");
+    var oCheckOne = document.querySelectorAll(".check-one");
+    var oDeleteAll = document.querySelector("#deleteAll");
+    var oSelectedTotal = document.querySelector("#selectedTotal");
+    var oPriceTotal = document.querySelector("#priceTotal");
+    //选择全部
+    oCheckAll.onclick = function() {
+      for (var i = 0; i < oCheckOne.length; i++) {
+        oCheckOne[i].checked = oCheckAll.checked;
+        total();
+      }
+    };
+    //删除全部
+    oDeleteAll.onclick = function() {
+      for (var i = 0; i < oCheckOne.length; i++) {
+        if (oCheckOne[i].checked) {
+          oCheckOne[i].parentNode.parentNode.remove();
+        }
+      }
+      total();
+    };
+
+    for (var i = 0; i < oAdd.length; i++) {
+      //选择单项
+      oCheckOne[i].onclick = function() {
+        check();
+        total();
+      };
+      //加
+      oAdd[i].onclick = function() {
+        var oTr = this.parentNode.parentNode;
+        var oReduce = oTr.querySelector(".reduce");
+        calc(oTr, 1);
+        oReduce.innerHTML = "-";
+        total();
+      };
+      //减
+      oReduce[i].onclick = function() {
+        if (!this.innerHTML) {
+          return;
+        }
+        var oTr = this.parentNode.parentNode;
+        count = calc(oTr, -1);
+        if (count <= 1) {
+          this.innerHTML = "";
+        }
+        total();
+      };
+      //删除单项
+      oDelete[i].onclick = function() {
+        var oTr = this.parentNode.parentNode;
+        oTr.remove();
+        total();
+      };
+    }
+
+    //加减计算函数
+    function calc(oTr, tag) {
+      var oCountInput = oTr.querySelector(".count-input");
+      var oSubtotal = oTr.querySelector(".subtotal");
+      var oPrice = oTr.querySelector(".price");
+      var count = oCountInput.value * 1;
+      count += tag;
+      oCountInput.value = count;
+      //小计计算,单价乘数量
+      oSubtotal.innerHTML = (oPrice.innerHTML * count).toFixed(2);
+
+      return count;
+    }
+
+    //单选
+    function check() {
+      for (var i = 0; i < oCheckOne.length; i++) {
+        if (!oCheckOne[i].checked) {
+          break;
+        }
+      }
+      if (i === oCheckOne.length) {
+        oCheckAll.checked = true;
+      } else {
+        oCheckAll.checked = false;
+      }
+    }
+
+    //计算总计函数
+    function total() {
+      oCheckOne = document.querySelectorAll(".check-one");
+      var count = 0;
+      var sub = 0;
+      for (var i = 0; i < oCheckOne.length; i++) {
+        if (oCheckOne[i].checked) {
+          var oTr = oCheckOne[i].parentNode.parentNode;
+          var oCountInput = oTr.querySelector(".count-input");
+          var oSubtotal = oTr.querySelector(".subtotal");
+          count += oCountInput.value * 1;
+          sub += oSubtotal.innerHTML * 1;
+        }
+      }
+      oSelectedTotal.innerHTML = count;
+      oPriceTotal.innerHTML = sub.toFixed(2);
+    }
+   
+   
+   
+   
+   
+  </script>
+</html>

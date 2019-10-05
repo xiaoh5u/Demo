@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="../css/reset.css">
+	<style type="text/css">
+/*百度一下*/
+		.baidu{
+			width: 420px;
+			height: 50px;
+			border: 1px solid red;
+			margin:100px auto;
+		}
+		.shuru{
+			width: 310px;
+			height: 50px;
+			border: 0;
+			/*padding-left: 10px;
+			padding-right: 30px;*/
+			float: left;
+		}
+		.shuru:focus{
+			outline: none;
+		}
+		.sousuo{
+			width: 70px;
+			height: 50px;
+			border: 0;
+			padding: 0;
+			background-color: red;
+			float: right;
+			color: white;
+		}
+		.file{
+			width: 40px;
+			height: 50px;
+			background-color: blue;
+			float: left;
+		}
+		.file input{
+			width: 40px;
+			height: 50px;
+			opacity: 0;
+		}
+
+/*百度一下*/
+/*文本域*/
+		textarea{
+			width: 200px;
+			height: 200px;
+			resize:none;
+			margin:20px auto;
+			display: block;
+		}
+/*文本域*/
+/*文件上传*/
+	.file1{
+		width: 200px;
+		height: 200px;
+		background-color: orange;
+		margin:20px auto;
+		line-height: 200px;
+		font-size: 30px;
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+	}
+	.file1 input{
+		text-indent: -999px;
+		opacity: 0;
+		cursor: pointer;
+		position: absolute;
+		top: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+	}
+
+/*文件上传*/
+/*折叠菜单*/
+	.menu{
+		width: 100px;
+		margin:20px auto;
+	}
+	.menu input + label{
+		width: 100px;
+		display: block;
+		line-height: 40px;
+		background-color: orange;
+		
+	}
+	.menu .hide{
+		width: 100px;
+		height: 100px;
+		background-color: red;
+		height: 0;
+		transition:.3s;
+	}
+	.menu input:checked + label+ .hide{
+		height: 100px;
+	}
+/*折叠菜单*/
+/*选项卡*/
+	.xxk{
+		width: 400px;
+		margin: 20px auto;
+	}
+	/*.xxk ul{
+		width: 800px;
+		height: 400px;
+	}*/
+	.xxk input + label{
+		width: 80px;
+		height: 40px;
+		background-color: orange;
+		display: block;
+		line-height: 40px;
+	}
+	.xxk .hide{
+		width: 300px;
+		height: 200px;
+		background-color: blue;
+		display: none;
+	}
+	.xxk input:checked + label + .hide{
+		display: block;
+	}
+	.xxk li{
+		width: 80px;
+		float: left;
+	}
+/*选项卡*/
+/*单选样式*/
+	.dx{
+		width: 800px;
+		height: 200px;
+		margin:50px auto;
+	}
+	.dx input+label{
+		width: 15px;
+		height: 15px;
+		border-radius: 50%;
+		border: 1px solid #ddd;
+		display: inline-block;
+	}
+	.dx input:checked+label{
+		border-color: red;
+	}
+	.dx li{
+		width: 25%;
+		float: left;
+	}
+/*单选样式*/
+
+	</style>
+</head>
+<body>
+<!-- 百度一下 -->
+	<div class="baidu">
+		<form action="">
+			<input type="text" class="shuru">
+			<div class="file">
+				<input type="file">
+			</div>
+			
+			<input type="submit" value="百度一下"class="sousuo">
+		</form>
+	</div>
+<!-- 百度一下 -->
+<!-- 文本域 -->
+	<textarea >设置不能拖动文本域</textarea>
+<!-- 文本域 -->
+<!-- 文件上传 -->
+	<div class="file1">
+		<input type="file">
+		<span class="txt">上传文件</span>
+	</div>
+<!-- 文件上传 -->
+<!-- 折叠菜单 -->
+	<div class="menu">
+		<ul>
+			<li>
+				<input type="checkbox" id="aa" hidden>
+				<label for="aa">OA系统管理</label>
+				<div class="hide"></div>
+			</li>
+			<li>
+				<input type="checkbox" id="bb" hidden>
+				<label for="bb">OA系统管理</label>
+				<div class="hide"></div>
+			</li>
+			<li>
+				<input type="checkbox" id="cc" hidden>
+				<label for="cc">OA系统管理</label>
+				<div class="hide"></div>
+			</li>
+		</ul>
+	</div>
+<!-- 折叠菜单 -->
+<!-- 选项卡 -->
+	<div class="xxk clear">
+		<ul class="clear">
+			<li>
+				<input type="radio" id="r1" hidden name="bb" checked="">
+				<label for="r1">商品详情</label>
+				<div class="hide"></div>
+			</li>
+			<li>
+				<input type="radio" id="r2" hidden name="bb">
+				<label for="r2">商品详情</label>
+				<div class="hide"></div>
+			</li>
+			<li>
+				<input type="radio" id="r3" hidden name="bb">
+				<label for="r3">商品详情</label>
+				<div class="hide"></div>
+			</li>
+			<li>
+				<input type="radio" id="r4" hidden name="bb">
+				<label for="r4">商品详情</label>
+				<div class="hide"></div>
+			</li>
+		</ul>
+	</div>
+<!-- 选项卡 -->
+<!-- 单选样式 -->
+	<div class="dx">
+		<ul>
+			<li>
+				<input type="radio" id="c1" hidden name="t">
+				<label for="c1"></label>
+				<span>A</span>
+			</li>
+			<li>
+				<input type="radio" id="e1" hidden name="t">
+				<label for="e1"></label>
+				<span>B</span>
+			</li>
+
+			<li>
+				<input type="radio" id="y1" hidden name="t">
+				<label for="y1"></label>
+				<span>C</span>
+			</li>
+			<li>
+				<input type="radio" id="f1" hidden name="t">
+				<label for="f1"></label>
+				<span>D</span>
+			</li>
+
+		</ul>
+		
+	</div>
+<!-- 单选样式 -->
+</body>
+</html>

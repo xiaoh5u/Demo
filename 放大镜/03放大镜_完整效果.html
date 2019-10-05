@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>02放大镜_拖动遮罩层</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      #box {
+        width: 420px;
+        position: relative;
+        margin-left: 50px;
+        margin-top: 50px;
+        box-shadow: 0 0 10px #000;
+      }
+
+      #top {
+        width: 420px;
+        height: 420px;
+        position: relative;
+      }
+
+      #smallImg {
+        width: 420px;
+        height: 420px;
+      }
+
+      #shadow {
+        position: absolute;
+        height: 140px;
+        width: 140px;
+        background-color: rgba(110, 110, 110, 0.7);
+        left: 0;
+        top: 0;
+        display: none;
+      }
+
+      #nav {
+        width: 420px;
+        overflow: hidden;
+      }
+
+      #nav li {
+        float: left;
+        width: 105px;
+        height: 105px;
+      }
+
+      #nav li img {
+        width: 105px;
+        height: 105px;
+      }
+
+      #bigShadow {
+        position: absolute;
+        height: 300px;
+        width: 300px;
+        left: 500px;
+        top: 0;
+        overflow: hidden;
+        display: none;
+        box-shadow: 0 0 10px #000;
+      }
+
+      #bigImg {
+        width: 900px;
+        height: 900px;
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="box">
+      <div id="top">
+        <img src="source/small1.jpg" id="smallImg" draggable="false" />
+        <div id="shadow"></div>
+
+        <div id="bigShadow">
+          <img src="source/big1.jpg" id="bigImg" />
+        </div>
+      </div>
+      
+      <ul id="nav">
+        <li data-small="source/small1.jpg" data-big="source/big1.jpg">
+          <img src="source/small1.jpg" />
+        </li>
+        <li data-small="source/small2.jpg" data-big="source/big2.jpg">
+          <img src="source/small2.jpg" />
+        </li>
+        <li data-small="source/small3.jpg" data-big="source/big3.jpg">
+          <img src="source/small3.jpg" />
+        </li>
+        <li data-small="source/small4.jpg" data-big="source/big4.jpg">
+          <img src="source/small4.jpg" />
+        </li>
+      </ul>
+    </div>
+  </body>
+  <script>
+    oLis = document.querySelectorAll("li");
+    oSmallImg = document.querySelector("#smallImg");
+    oTop = document.querySelector("#top");
+    oBigImg = document.querySelector("#bigImg");
+    oShadow = document.querySelector("#shadow");
+    oBox = document.querySelector("#box");
+    oBigShadow = document.querySelector("#bigShadow");
+    for (var i = 0; i < oLis.length; i++) {
+      oLis[i].index = i;
+      oLis[i].onmouseenter = function() {
+        oSmallImg.src = oLis[this.index].getAttribute("data-small");
+        oBigImg.src = oLis[this.index].getAttribute("data-big");
+      };
+    }
+
+    oTop.onmousemove = function(e) {
+      oShadow.style.display = "block";
+      oBigShadow.style.display = "block";
+      var ev = event || e;
+      maxLeft = oSmallImg.clientWidth - oShadow.offsetWidth;
+      maxTop = oSmallImg.clientHeight - oShadow.offsetHeight;
+
+      var left = ev.pageX - oBox.offsetLeft - oShadow.offsetWidth / 2;
+      var top = ev.pageY - oBox.offsetTop - oShadow.offsetHeight / 2;
+  
+      if (left < 0) {
+        left = 0;
+      }
+      if (left > maxLeft) {
+        left = maxLeft;
+      }
+
+      if (top < 0) {
+        top = 0;
+      }
+      if (top > maxTop) {
+        top = maxTop;
+      }
+
+      //获取非行内样式
+      var oBigImgWidth = parseInt(getStyle(oBigImg, "width"));
+      var oBigShadowWidth = parseInt(getStyle(oBigShadow, "width"));
+      var oShadowWidth = parseInt(getStyle(oShadow, "width"));
+      //600/280
+      var scale =(oBigImgWidth - oBigShadowWidth )/ (oSmallImg.offsetWidth - oShadowWidth);
+
+      oTop.onmouseout = function() {
+        oShadow.style.display = "none";
+        oBigShadow.style.display = "none";
+      };
+
+      oShadow.style.left = left + "px";
+      oShadow.style.top = top + "px";
+      oBigImg.style.left = -left * scale + "px";
+      oBigImg.style.top = -top * scale + "px";
+    };
+
+    function getStyle(ele, property) {
+      if (getComputedStyle) {
+        return getComputedStyle(ele, false)[property];
+      } else {
+        return ele.currentStyle[property];
+      }
+    }
+  </script>
+</html>

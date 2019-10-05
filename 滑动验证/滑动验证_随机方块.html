@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>35滑动验证_随机方块</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    #box {
+      width: 650px;
+      height: 400px;
+      margin: 50px auto;
+      border: 1px solid red;
+      position: relative;
+    }
+
+    #content {
+      width: 650px;
+      height: 350px;
+      position: relative;
+      background-image: url("yys.jpg");
+      background-size: 650px 350px;
+    }
+
+    #shadow {
+      height: 40px;
+      width: 40px;
+      position: absolute;
+      background-color: orange;
+      left: 0;
+      top: 0;
+    }
+
+    #block {
+      height: 40px;
+      width: 40px;
+      position: absolute;
+      left: 0;
+      top: 355px;
+      background-image: url("yys.jpg");
+      background-size: 650px 350px;
+    }
+
+    #tip {
+      height: 40px;
+      width: 40px;
+      position: absolute;
+      left: 0;
+      top: 260px;
+      background-image: url("yys.jpg");
+      background-size: 650px 350px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="box">
+    <div id="content">
+      <div id="shadow"></div>
+      <div id="tip"></div>
+    </div>
+    <div id="block"></div>
+  </div>
+</body>
+<script>
+  var oBlock = document.querySelector('#block')
+  var oContent = document.querySelector('#content')
+  var oBox = document.querySelector('#box')
+  var oShadow = document.querySelector('#shadow')
+  var oTip = document.querySelector('#tip')
+
+  var maxLeft = oContent.clientWidth - oShadow.offsetWidth
+  var maxTop = oContent.clientHeight - oShadow.offsetHeight
+  setRadom()
+
+  oBlock.onmousedown = function (e) {
+    var ev = event || e
+
+    var startX = ev.x
+    document.onmousemove = function (e) {
+      var ev = event || e
+      var endX = ev.x
+      var left = endX - startX;
+      if (left < 0) {
+        left = 0
+      }
+      if (left > maxLeft) {
+        left = maxLeft
+      }
+      oBlock.style.left = left + 'px'
+      oTip.style.left = left + 'px'
+    }
+
+    document.onmouseup = function () {
+      document.onmousemove = null;
+
+      if (Math.abs(oTip.offsetLeft - oShadow.offsetLeft) <= 2) {
+        alert('nb')
+        history.go(0)
+      } else {
+        oBlock.style.left = 0
+        oTip.style.left = 0
+        setRadom()
+      }
+    }
+  }
+
+
+  function setRadom() {
+
+    var randomX = Math.round(Math.random() * maxLeft)
+    var randomY = Math.round(Math.random() * maxTop)
+
+    oShadow.style.left = randomX + 'px'
+    oShadow.style.top = randomY + 'px'
+    oTip.style.top = randomY + 'px'
+
+    oShadow.style.backgroundPosition = -randomX + 'px ' + -randomY + 'px'
+    oTip.style.backgroundPosition = -randomX + 'px ' + -randomY + 'px'
+
+  }
+
+
+</script>
+
+</html>

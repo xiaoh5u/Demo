@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    div {
+        width: 100px;
+        height: 100px;
+        background-color: pink;
+        position: absolute;
+    }
+</style>
+
+<body>
+    <div></div>
+</body>
+<script>
+    'use strict'
+    var oDiv = document.querySelector('div')
+    var maxTop = document.documentElement.clientHeight - oDiv.offsetHeight
+    var maxLeft = document.documentElement.clientWidth - oDiv.offsetWidth
+
+    oDiv.onmousedown = function (e) {
+        var ev = event || e
+        var startX = ev.offsetX;
+        var startY = ev.offsetY;
+        document.onmousemove = function (e) {
+            var ev = event || e
+            var left = ev.x - startX
+            var top = ev.y - startY
+
+
+            if (left < 0) {
+                left = 0
+            }
+            if (top < 0) {
+                top = 0
+            }
+            if (left > maxLeft) {
+                left = maxLeft
+            }
+            if (top > maxTop) {
+                top = maxTop
+            }
+            oDiv.style.left = left + 'px'
+            oDiv.style.top = top + 'px'
+
+        }
+        document.onmouseup = function () {
+            document.onmousemove = null
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // oDiv.onmousedown = function (e) {
+
+    //     var ev = event || e;
+    //     var startX = ev.offsetX
+    //     var startY = ev.offsetY
+
+    //     document.onmousemove = function (e) {
+    //         var ev = event || e;
+    //         var left = ev.x - startX
+    //         var top = ev.y - startY
+    //         // console.log('ev.x'+ev.x )
+    //         // console.log(left)
+    //         if (left < 0) {
+    //             left = 0
+    //         }
+    //         if (top < 0) {
+    //             top = 0
+    //         }
+    //         if (top > maxTop) {
+    //             top = maxTop
+    //         }
+    //         if (left > maxLeft) {
+    //             left = maxLeft
+    //         }
+
+    //         oDiv.style.left = left + 'px'
+    //         oDiv.style.top = top + 'px'
+
+    //     }
+    // }
+    // document.onmouseup = function () {
+    //     document.onmousemove = null
+    // }
+
+</script>
+
+</html>

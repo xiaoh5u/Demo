@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>网页换肤</title>
+  <link id="link" href="css1.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="skin2">
+  <div id="message" class="main">
+    <dt>
+      <strong>可以换肤的提交框：</strong>
+      <button id="btn1" data-href="css1.css">皮肤1</button>
+      <button id="btn2" data-href="css2.css">皮肤2</button>
+    </dt>
+    <dd>输入姓名：<input class="text" type="text" /></dd>
+    <dd>输入密码：<input class="text" type="password" /></dd>
+    <dd>请您留言：<textarea></textarea></dd>
+    <dd class="center"><input class="btn" type="submit" value="提交" /></dd>
+  </div>
+</body>
+<script>
+  var oBtn1 = document.getElementById('btn1'),
+      oBtn2 = document.getElementById('btn2'),
+      oLink = document.getElementById('link');
+
+  oBtn2.onclick = oBtn1.onclick = function () {
+    oLink.href = this.getAttribute('data-href')
+  }
+
+</script>
+
+</html>

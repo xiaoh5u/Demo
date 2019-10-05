@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    
+        div{
+            width: 50px;
+            height: 50px;
+            background-color: orange;
+            border-radius: 50%;
+            position: absolute;
+            transform: translate(-50%,-50%)
+        }
+    </style>
+</head>
+<body>
+    <div></div>
+</body>
+<script>
+    oDiv = document.querySelector('div')
+
+  document.onmousemove = function(e){
+      var ev =event||e;
+      oDiv.style.left = ev.clientX +'px'
+      oDiv.style.top = ev.clientY +'px'
+      oDiv.style.backgroundColor =  randomColor()
+  }
+  function randomColor() {
+        r = Math.round(Math.random() * 255)
+        g = Math.round(Math.random() * 255)
+        b = Math.round(Math.random() * 255)
+        rgb = 'rgb' + '(' + r + ',' + g + ',' + b + ')'
+        return rgb
+    }
+
+
+</script>
+</html>

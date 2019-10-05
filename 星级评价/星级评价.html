@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    #ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        display: inline-block;
+        vertical-align: middle;
+        height: 28px;
+    }
+
+    #div {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 10px;
+    }
+
+    #ul li {
+        float: left;
+        background: url("star.gif") no-repeat 0 0;
+        width: 27px;
+        height: 28px;
+    }
+
+    #ul li.active {
+        background: url("star.gif") no-repeat 0 -29px;
+    }
+</style>
+
+
+<body>
+    <ul id="ul">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <div id="div"></div>
+</body>
+<script>
+    var oLis = document.querySelectorAll('#ul li')
+    var oDiv = document.querySelector('div')
+
+
+
+
+    var num = 0;
+    var tips = ['差评','勉强','一般','还行','推荐']
+    for (var i = 0; i < oLis.length; i++) {
+        oLis[i].index = i
+        oLis[i].onmouseenter = function () {
+            index = this.index
+            console.log(index)
+            if (index < num) {
+                index = num
+            } 
+            oDiv.innerText = tips[index]
+            for (var i = 0; i < oLis.length; i++) {
+                oLis[i].classList.remove('active')
+                
+            }
+            for (var i = 0; i <= index; i++) {
+                oLis[i].classList.add('active')
+            }
+        }
+        oLis[i].onclick = function () {
+            num = this.index
+            console.log(num)
+          
+        }
+    }
+</script>
+
+</html>
